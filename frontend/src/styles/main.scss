@@ -1,0 +1,25 @@
+// 1. Variables & Mixins (Must be imported first!)
+@import 'variables';
+
+// 2. Global Resets & Base Styles
+* {
+  box-sizing: border-box;
+  font-family: $font-main;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  // We keep the main gradient background here so the whole app looks cohesive
+  background: linear-gradient(135deg, $bg-gradient-start, $bg-gradient-end);
+  background-attachment: fixed;
+  min-height: 100vh;
+  color: $text-dark;
+  -webkit-font-smoothing: antialiased;
+}
+
+// 3. Page & Component Imports
+@import 'auth';
+@import "landing";
+@import 'negotiator';
+@import 'leaderboard';

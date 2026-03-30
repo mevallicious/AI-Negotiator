@@ -1,0 +1,166 @@
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+  position: relative; // Needed for the absolute positioned logo
+}
+
+.auth-logo-area {
+  position: absolute;
+  top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: $text-dark;
+    letter-spacing: -1px;
+  }
+
+  .auth-badge {
+    background: #98FF98; // Mint green
+    border: $border-medium;
+    border-radius: 9999px;
+    padding: 0.25rem 1rem;
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 800;
+  }
+}
+
+.auth-card {
+  background: $card-bg;
+  width: 100%;
+  max-width: 450px;
+  border: $border-thick;
+  border-radius: 32px;
+  box-shadow: $shadow-brutal;
+  overflow: hidden;
+  margin-top: 4rem; // Gives space for the logo
+}
+
+.auth-tabs {
+  display: flex;
+  border-bottom: $border-medium;
+
+  button {
+    flex: 1;
+    padding: 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 800;
+    border: none;
+    background: $tab-inactive;
+    color: rgba($text-dark, 0.5);
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &.active {
+      background: $card-bg;
+      color: $text-dark;
+    }
+
+    &:first-child {
+      border-right: $border-medium;
+    }
+  }
+}
+
+.auth-form {
+  padding: 2rem;
+
+  .input-group {
+    margin-bottom: 1.5rem;
+
+    label {
+      display: block;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .input-wrapper {
+      position: relative;
+      
+      input {
+        width: 100%;
+        padding: 1rem 3rem 1rem 1.5rem;
+        background: $input-bg;
+        border: $border-medium;
+        border-radius: 16px;
+        font-size: 1rem;
+        font-weight: 600;
+        color: $text-dark;
+        outline: none;
+        transition: background 0.2s, box-shadow 0.2s;
+
+        &::placeholder {
+          color: rgba($text-dark, 0.4);
+          font-weight: 500;
+        }
+
+        &:focus {
+          background: #fff;
+          box-shadow: 0 0 0 4px rgba($bg-gradient-start, 0.3);
+        }
+      }
+
+      .icon {
+        position: absolute;
+        right: 1.25rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: rgba($text-dark, 0.6);
+      }
+    }
+
+    .hint {
+      display: block;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: rgba($text-dark, 0.6);
+      margin-top: 0.5rem;
+    }
+  }
+
+  .btn-submit {
+    width: 100%;
+    padding: 1.25rem;
+    background: $btn-green;
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 900;
+    border: $border-medium;
+    border-radius: 24px;
+    box-shadow: 0px 6px 0px 0px $btn-green-shadow;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: transform 0.1s, box-shadow 0.1s;
+
+    &:active {
+      transform: translateY(4px);
+      box-shadow: 0px 2px 0px 0px $btn-green-shadow;
+    }
+
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: 0px 6px 0px 0px $btn-green-shadow;
+    }
+  }
+}
+
+.auth-error {
+  background: #FF6B6B;
+  color: white;
+  padding: 1rem;
+  border: $border-medium;
+  border-radius: 12px;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}

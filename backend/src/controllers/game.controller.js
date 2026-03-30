@@ -56,7 +56,8 @@ export const processBid = async (req, res) => {
 
     session.patience -= patiencePenalty;
 
-    const reply = await getSellerReply(session, message);
+   
+    const reply = await getAIResponse(session, userMessage, bidAmount);
 
     if (reply.includes("DEAL!")) {
       session.status = 'completed';

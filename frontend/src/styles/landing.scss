@@ -1,0 +1,266 @@
+// src/styles/_landing.scss
+
+.landing-container {
+  min-height: 100vh;
+  background-color: #FDF9F1; // Soft off-white paper background
+  color: $text-dark;
+  padding-bottom: 4rem;
+}
+
+// --- Navbar ---
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 4rem;
+  border-bottom: $border-thick;
+  background-color: #fff;
+
+  .logo {
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+    color: $text-dark;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+
+    a {
+      font-weight: 800;
+      color: $text-dark;
+      text-decoration: none;
+      transition: color 0.2s;
+
+      &:hover {
+        color: $btn-green;
+      }
+    }
+
+    .btn-signup {
+      background-color: $text-dark;
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      border-radius: 999px;
+      border: $border-medium;
+      box-shadow: 0px 4px 0px 0px $bg-gradient-end;
+      transition: transform 0.1s, box-shadow 0.1s;
+
+      &:active {
+        transform: translateY(2px);
+        box-shadow: 0px 2px 0px 0px $bg-gradient-end;
+      }
+    }
+  }
+}
+
+// --- Hero Section ---
+.hero-section {
+  padding: 4rem;
+  max-width: 1400px;
+  margin: 0 auto;
+
+  .hero-card {
+    background-color: #7CD4FD; // Bright sky blue
+    border: $border-thick;
+    border-radius: 32px;
+    box-shadow: $shadow-brutal;
+    display: flex;
+    align-items: stretch;
+    position: relative;
+    overflow: hidden;
+
+    .hero-content {
+      flex: 1;
+      padding: 5rem 4rem;
+      
+      h1 {
+        font-size: 4rem;
+        font-weight: 900;
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+        
+        span {
+          font-style: italic;
+          color: #fff;
+          text-shadow: 3px 3px 0px $text-dark;
+        }
+      }
+
+      p {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 3rem;
+        max-width: 80%;
+        line-height: 1.6;
+      }
+    }
+
+    .hero-image-area {
+      flex: 1;
+      background-color: #1A1A1A;
+      border-left: $border-thick;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem;
+      position: relative;
+
+      .placeholder-art {
+        font-size: 10rem;
+      }
+    }
+
+    .unbendable-tag {
+      position: absolute;
+      top: 2rem;
+      right: -2rem;
+      background-color: $bg-gradient-start;
+      border: $border-medium;
+      padding: 0.5rem 3rem;
+      font-weight: 900;
+      font-size: 1.2rem;
+      transform: rotate(15deg);
+      box-shadow: 4px 4px 0px 0px $text-dark;
+      z-index: 10;
+    }
+  }
+}
+
+// --- Generic Buttons ---
+.btn-primary {
+  background-color: $btn-green;
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 900;
+  padding: 1rem 2.5rem;
+  border: $border-medium;
+  border-radius: 999px;
+  box-shadow: 0px 6px 0px 0px $btn-green-shadow;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+
+  &:active {
+    transform: translateY(4px);
+    box-shadow: 0px 2px 0px 0px $btn-green-shadow;
+  }
+}
+
+// --- Grid Layouts ---
+.section-title {
+  text-align: center;
+  font-size: 3rem;
+  font-weight: 900;
+  margin: 4rem 0 3rem;
+
+  span {
+    border-bottom: 6px solid $bg-gradient-start;
+  }
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.info-card {
+  background: #fff;
+  border: $border-thick;
+  border-radius: 24px;
+  padding: 2.5rem;
+  box-shadow: $shadow-brutal;
+  
+  &.yellow { border-color: #FFD93D; box-shadow: 8px 8px 0px 0px #FFD93D; }
+  &.blue { border-color: #6EB9F7; box-shadow: 8px 8px 0px 0px #6EB9F7; }
+  &.red { border-color: #FF6B6B; box-shadow: 8px 8px 0px 0px #FF6B6B; }
+
+  .icon-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: $border-medium;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-weight: 600;
+    color: rgba($text-dark, 0.8);
+    line-height: 1.5;
+  }
+}
+
+// --- Victim Cards ---
+.victim-card {
+  background: #fff;
+  border: $border-thick;
+  border-radius: 24px;
+  box-shadow: $shadow-brutal;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  .victim-image {
+    height: 250px;
+    background-color: #E5E5E5;
+    border-bottom: $border-thick;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+
+    .difficulty-badge {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      padding: 0.25rem 1rem;
+      border: $border-medium;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 0.8rem;
+      color: #fff;
+    }
+  }
+
+  .victim-content {
+    padding: 2rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    h3 {
+      font-size: 1.75rem;
+      font-weight: 900;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: rgba($text-dark, 0.7);
+      margin-bottom: 2rem;
+      flex: 1;
+    }
+
+    button {
+      width: 100%;
+      border-radius: 12px;
+    }
+  }
+}
