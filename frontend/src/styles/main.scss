@@ -1,4 +1,3 @@
-@use "sass:color";
 @use 'variables' as *;
 @use 'auth' as *;
 @use 'negotiator' as *;
@@ -17,12 +16,4 @@ body {
   min-height: 100vh;
   color: $text-dark;
   -webkit-font-smoothing: antialiased;
-}
-
-
-.is-current-user {
-    background-color: #FFD93D;
-    &:hover {
-      background-color: color.adjust(#FFD93D, $lightness: 5%);
-    }
 }
