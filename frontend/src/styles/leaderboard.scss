@@ -1,9 +1,8 @@
-// src/styles/_leaderboard.scss
-
+@use "sass:color";
+@use 'variables' as *;
 .leaderboard-wrapper {
   min-height: 100vh;
   background-color: #FDF9F1;
-  background-image: radial-gradient(rgba($text-dark, 0.1) 2px, transparent 2px);
   background-size: 30px 30px;
   padding: 4rem 2rem;
   display: flex;

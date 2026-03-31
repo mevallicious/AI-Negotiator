@@ -1,7 +1,8 @@
-// 1. Variables & Mixins (Must be imported first!)
-@import 'variables';
-
-// 2. Global Resets & Base Styles
+@use "sass:color";
+@use 'variables' as *;
+@use 'auth' as *;
+@use 'negotiator' as *;
+@use 'leaderboard' as *; 
 * {
   box-sizing: border-box;
   font-family: $font-main;
@@ -18,8 +19,10 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-// 3. Page & Component Imports
-@import 'auth';
-@import "landing";
-@import 'negotiator';
-@import 'leaderboard';
+
+.is-current-user {
+    background-color: #FFD93D;
+    &:hover {
+      background-color: color.adjust(#FFD93D, $lightness: 5%);
+    }
+}

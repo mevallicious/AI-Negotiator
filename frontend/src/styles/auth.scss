@@ -1,3 +1,6 @@
+@use "sass:color";
+@use 'variables' as *;
+
 .auth-container {
   display: flex;
   justify-content: center;
@@ -6,7 +9,7 @@
   padding: 2rem;
   position: relative; // Needed for the absolute positioned logo
 
-  background-color: #ffe0a3;
+  background-color: #d6a84c;
   background-image: radial-gradient(rgba($text-dark, 0.1) 2px, transparent 2px);
   background-size: 30px 30px;
 }
