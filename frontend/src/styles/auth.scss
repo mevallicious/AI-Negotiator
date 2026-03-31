@@ -5,6 +5,10 @@
   min-height: 100vh;
   padding: 2rem;
   position: relative; // Needed for the absolute positioned logo
+
+  background-color: #ffe0a3;
+  background-image: radial-gradient(rgba($text-dark, 0.1) 2px, transparent 2px);
+  background-size: 30px 30px;
 }
 
 .auth-logo-area {
@@ -40,7 +44,7 @@
   border-radius: 32px;
   box-shadow: $shadow-brutal;
   overflow: hidden;
-  margin-top: 4rem; // Gives space for the logo
+  margin-top: 4rem;
 }
 
 .auth-tabs {

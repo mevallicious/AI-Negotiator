@@ -1,15 +1,15 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { useGame } from '../../hooks/useGame';
-import '../../styles/main.scss';
+
 
 const LandingPage = () => {
   const navigate = useNavigate();
-  // We pull handleLogOut from your hook to wire up the new button
+
   const { isAuthenticated, handleLogOut } = useAuth();
   const { startNewGame, loading } = useGame();
 
-  // THE LOGIC: If logged in, start the exact match and go to the terminal.
+
   const handleHaggleClick = async (difficulty) => {
     if (!isAuthenticated) {
       navigate('/login');
@@ -20,7 +20,7 @@ const LandingPage = () => {
      const isSuccess = await startNewGame(difficulty);
       
       if (isSuccess) {
-        navigate('/negotiate'); // BOOM. Teleport.
+        navigate('/negotiate'); 
       } else {
         alert("🚨 Game failed to start. Check console!");
       }
@@ -31,7 +31,7 @@ const LandingPage = () => {
 
   const onLogoutClick = async () => {
     await handleLogOut();
-    navigate('/'); // Refresh the landing page state
+    navigate('/login');
   };
 
   return (

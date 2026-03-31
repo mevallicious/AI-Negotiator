@@ -2,12 +2,16 @@ import mongoose from 'mongoose';
 
 const gameSessionSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  sellerName: { type: String, default: "Zappy the Robot" },
-  productName: { type: String, default: "A Literal Moon Rock" },
-  initialPrice: { type: Number, default: 1000 },
-  currentPrice: { type: Number, default: 1000 },
-  minPrice: { type: Number, default: 400 }, // The AI's secret limit
-  patience: { type: Number, default: 10 },    // 10 = Happy, 0 = Rage Quit
+  sellerName: { type: String, required: true },
+  productName: { type: String, required: true },
+  difficulty: { type: String, enum: ['Easy', 'Medium', 'Hard', 'easy', 'medium', 'hard'], required: true },
+  traits: { type: String }, 
+  tagline: { type: String },
+  initialPrice: { type: Number, required: true },
+  currentPrice: { type: Number, required: true },
+  minPrice: { type: Number, required: true }, 
+  patience: { type: Number, default: 20 }, 
+  
   history: [
     {
       role: { type: String, enum: ['user', 'assistant'] },

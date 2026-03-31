@@ -20,7 +20,7 @@ const LoginPage = () => {
     
     try {
       await handleLogin(formData);
-      navigate('/dashboard'); // Boom! Straight to the character select
+      navigate('/dashboard');
     } catch (err) {
       setErrorMsg(err);
     }

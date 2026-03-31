@@ -3,32 +3,40 @@ import { ScoreContext } from '../context/ScoreContext';
 import { fetchGlobalLeaderboard, fetchMyScores } from '../api/score.api';
 
 export const useScore = () => {
-    const { setLeaderboard, setMyScores } = useContext(ScoreContext);
+    // 🚨 FIX 1: We need to get the data variables out of context too!
+    const { leaderboard, setLeaderboard, myScores, setMyScores } = useContext(ScoreContext);
     const [loading, setLoading] = useState(false);
 
     const getLeaderboard = async () => {
         setLoading(true);
         try {
-        const { data } = await fetchGlobalLeaderboard();
-        setLeaderboard(data);
+            const { data } = await fetchGlobalLeaderboard();
+            setLeaderboard(data);
         } catch (err) {
-        console.error("Could not fetch the legends list.", err);
+            console.error("Could not fetch the legends list.", err);
         } finally {
-        setLoading(false);
+            setLoading(false);
         }
     };
 
     const getPersonalScores = async () => {
         setLoading(true);
         try {
-        const { data } = await fetchMyScores();
-        setMyScores(data);
+            const { data } = await fetchMyScores();
+            setMyScores(data);
         } catch (err) {
-        console.error("Could not fetch your trophies.", err);
+            console.error("Could not fetch your trophies.", err);
         } finally {
-        setLoading(false);
+            setLoading(false);
         }
     };
 
-    return { getLeaderboard, getPersonalScores, loading };
+    // 🚨 FIX 2: Return 'leaderboard' and 'myScores' so the Page can use them!
+    return { 
+        leaderboard, 
+        myScores, 
+        getLeaderboard, 
+        getPersonalScores, 
+        loading 
+    };
 };

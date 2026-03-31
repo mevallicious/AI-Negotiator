@@ -18,7 +18,6 @@ export const useGame = () => {
         resetGame();
         try {
             const { data } = await startGameRequest(difficulty);
-            // Handling the data structure from your alert
             const gameData = data.game || data; 
             
             setSession(gameData);
@@ -28,7 +27,7 @@ export const useGame = () => {
                 role: 'assistant', 
                 content: `I am ${gameData.sellerName}. Let's negotiate!` 
             }]);
-            return true; // Return true so the LandingPage knows to navigate
+            return true;
         } catch (err) {
             console.error("Start game failed", err);
             return false;
@@ -48,13 +47,10 @@ export const useGame = () => {
         try {
             const { data } = await processBidRequest(id, userMessage, bidAmount);
             
-            // Once you fix the backend to use getAIResponse, 
-            // it will return 'reply', 'patience', and 'status'.
             setMessages((prev) => [...prev, { role: 'assistant', content: data.reply }]);
             setPatience(data.patience);
             setStatus(data.status); 
             
-            // If the backend updated the price, update it in the session too
             if (data.currentPrice) {
                 setSession(prev => ({ ...prev, currentPrice: data.currentPrice }));
             }
@@ -66,7 +62,6 @@ export const useGame = () => {
         }
     };
 
-    // 🚨 ADDED THESE TO THE RETURN STATEMENT:
     return { 
         session, 
         messages, 

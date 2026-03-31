@@ -21,7 +21,7 @@ const RegisterPage = () => {
     
     try {
       await handleRegister(formData);
-      navigate('/dashboard'); // Success! Send to character select
+      navigate('/dashboard'); 
     } catch (err) {
       setErrorMsg(err);
     }
@@ -35,7 +35,7 @@ const RegisterPage = () => {
         <div className="auth-badge">Where facts meet logic! 🦉</div>
       </div>
 
-      {/* The Bouncy Card */}
+      
       <div className="auth-card">
         <form className="auth-form" onSubmit={onSubmit}>
           
@@ -58,7 +58,7 @@ const RegisterPage = () => {
               />
               <User size={20} strokeWidth={2.5} className="icon" />
             </div>
-            <span className="hint">Don't worry, we won't tell Ankur Bhaiya your real name.</span>
+            <span className="hint">Don't worry, I won't tell Ankur Bhaiya your real name.</span>
           </div>
 
           <div className="input-group">

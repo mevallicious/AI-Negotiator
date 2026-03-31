@@ -2,19 +2,19 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useScore } from '../../hooks/useScore';
 import { useAuth } from '../../hooks/useAuth';
-import '../../styles/main.scss';
+
 
 const LeaderboardPage = () => {
   const { leaderboard, getLeaderboard, loading } = useScore();
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  // Fetch the leaderboard data when the page loads
+
   useEffect(() => {
     getLeaderboard();
   }, []);
 
-  // Helper function to assign a funny style badge based on discount or rounds
+
   const getStyleBadge = (rounds, discount) => {
     if (rounds > 10) return { label: 'SPAMMED LOWBALL', class: 'spam' };
     if (discount > 50) return { label: 'MASTER NEGOTIATOR', class: 'master' };
@@ -45,7 +45,7 @@ const LeaderboardPage = () => {
             Fetching facts and logic... 🕵️‍♂️
           </div>
         ) : (
-          leaderboard.map((score, index) => {
+          leaderboard?.map((score, index) => {
             const isCurrentUser = user && user._id === score.userId;
             const rank = index + 1;
             const style = getStyleBadge(score.rounds, score.discountPercentage);
@@ -91,7 +91,7 @@ const LeaderboardPage = () => {
         )}
         
         {/* Fallback if database is totally empty */}
-        {!loading && leaderboard.length === 0 && (
+        {!loading && leaderboard?.length === 0 && (
           <div style={{ padding: '3rem', textAlign: 'center', fontWeight: 'bold' }}>
             No legends yet. Be the first to secure a deal!
           </div>

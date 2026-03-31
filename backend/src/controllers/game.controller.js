@@ -1,23 +1,23 @@
 import GameSession from '../models/game.model.js';
 import Score from '../models/score.model.js'; 
-import { getAIResponse } from '../services/mistralService.js';
-import { getPersona } from '../services/personaService.js'
+import { getAIResponse } from '../services/mistralService.js'; // Note: Keeping name same but using Gemini inside
+import { getPersona } from '../services/personaService.js';
 
-
+// 🎮 START A NEW NEGOTIATION
 export const startGame = async (req, res) => {
   const { difficulty } = req.body; 
   try {
-
     const persona = getPersona(difficulty);
 
     const session = await GameSession.create({
       userId: req.user._id, 
       sellerName: persona.name,
       productName: persona.product,
+      tagline: persona.tagline, // 🚨 Ensure this is in your GameSession Schema!
+      traits: persona.traits,   // 🚨 Ensure this is in your GameSession Schema!
       initialPrice: persona.initialPrice,
       currentPrice: persona.initialPrice,
       minPrice: persona.minPrice,
-      traits: persona.traits,
       patience: persona.patience,
       difficulty: persona.difficulty,
       status: 'ongoing',
@@ -26,29 +26,33 @@ export const startGame = async (req, res) => {
 
     res.status(201).json(session);
   } catch (error) {
-    console.error("Start Game Error:", error);
+    console.error("❌ Start Game Error:", error);
     res.status(500).json({ error: "Failed to start the haggle!" });
   }
 };
 
-// 💰 PROCESS BID
+// 💰 PROCESS A BID (THE MAIN ENGINE)
 export const processBid = async (req, res) => {
   const { sessionId, message, bidAmount } = req.body;
+  const bid = Number(bidAmount);
+
+  console.log(`🔔 BID RECEIVED: $${bid} for session ${sessionId}`);
 
   try {
+    // 1. Validation
     const session = await GameSession.findById(sessionId);
     if (!session || session.status !== 'ongoing') {
         return res.status(400).json({ msg: "Game session invalid or ended." });
     }
 
-    const bid = Number(bidAmount);
+    // 2. Patience Penalty Logic (Rules of the Game)
     let patiencePenalty = 0;
+    const diff = session.difficulty.toLowerCase();
 
-    // Difficulty logic stays here because it's part of the game "rules"
-    if (session.difficulty === 'Hard') {
+    if (diff === 'hard') {
       if (bid < session.currentPrice * 0.9) patiencePenalty = 3;
       else if (bid < session.currentPrice) patiencePenalty = 1;
-    } else if (session.difficulty === 'Medium') {
+    } else if (diff === 'medium') {
       if (bid < session.currentPrice * 0.7) patiencePenalty = 2;
     } else {
       if (bid < session.currentPrice * 0.3) patiencePenalty = 1;
@@ -56,50 +60,59 @@ export const processBid = async (req, res) => {
 
     session.patience -= patiencePenalty;
 
-   
-    const reply = await getAIResponse(session, userMessage, bidAmount);
+    // 3. Get AI Response from Gemini
+    const reply = await getAIResponse(session, message);
 
-    if (reply.includes("DEAL!")) {
+    // 4. Handle Deal or Failure (Case Insensitive!)
+    const upperReply = reply.toUpperCase();
+
+    if (upperReply.includes("DEAL!")) {
       session.status = 'completed';
       session.finalPrice = bid;
 
+      // Calculate Savings Performance
       const discount = ((session.initialPrice - bid) / session.initialPrice) * 100;
       
+      // Save to Global Leaderboard
       await Score.create({
         userId: session.userId,
         username: req.user.username,
         productName: session.productName,
         finalPrice: bid,
-        discountPercentage: discount.toFixed(2),
+        discountPercentage: parseFloat(discount.toFixed(2)),
         rounds: (session.history.length / 2) + 1,
         rankTitle: getRankTitle(session.difficulty, discount)
       });
-    } 
-    else if (reply.includes("BYE BYE!") || session.patience <= 0) {
+      console.log("🏆 SCORE SAVED TO LEADERBOARD");
+
+    } else if (upperReply.includes("BYE BYE!") || session.patience <= 0) {
       session.status = 'failed';
     }
 
+    // 5. Update Session State
     session.currentPrice = bid; 
     session.history.push({ role: 'user', content: message });
     session.history.push({ role: 'assistant', content: reply });
     
     await session.save();
 
-    res.json({ 
-      reply, 
-      status: session.status, 
-      patience: session.patience,
-      currentPrice: session.currentPrice 
+    // 6. Send clean response back to React
+    return res.json({
+        reply: reply, // Matches the frontend's data.reply
+        patience: session.patience,
+        status: session.status,
+        currentPrice: session.currentPrice
     });
 
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error("❌ ProcessBid Error:", error.message);
+    res.status(500).json({ error: "The AI is currently short-circuiting. Try again!" });
   }
 };
 
-// Helper for the Leaderboard
+// 🏅 HELPER: ASSIGN TITLES
 const getRankTitle = (difficulty, discount) => {
-  if (difficulty === 'Hard' && discount > 10) return "The Art of the Deal Master";
-  if (difficulty === 'Easy' && discount > 50) return "Speedy Robbery";
+  if (difficulty.toLowerCase() === 'hard' && discount > 15) return "The Art of the Deal Master";
+  if (difficulty.toLowerCase() === 'easy' && discount > 50) return "Speedy Robbery";
   return "Negotiator";
 };
