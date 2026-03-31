@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGame } from '../../hooks/useGame';
 
+import '../../styles/main.scss'; 
 
 const NegotiatorPage = () => {
   const { session, messages, patience, status, sendBid, loading, startNewGame } = useGame();

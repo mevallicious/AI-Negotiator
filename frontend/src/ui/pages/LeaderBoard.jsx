@@ -2,19 +2,19 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useScore } from '../../hooks/useScore';
 import { useAuth } from '../../hooks/useAuth';
-
+import '../../styles/main.scss';
 
 const LeaderboardPage = () => {
   const { leaderboard, getLeaderboard, loading } = useScore();
   const { user } = useAuth();
   const navigate = useNavigate();
 
-
+  // Fetch the leaderboard data when the page loads
   useEffect(() => {
     getLeaderboard();
   }, []);
 
-
+  // Helper function to assign a funny style badge based on discount or rounds
   const getStyleBadge = (rounds, discount) => {
     if (rounds > 10) return { label: 'SPAMMED LOWBALL', class: 'spam' };
     if (discount > 50) return { label: 'MASTER NEGOTIATOR', class: 'master' };
